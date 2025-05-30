@@ -35,6 +35,7 @@ class Page {
         await Promise.all(promiseArr);
         this.inited = true;
         Log.info(`Page initialization for ${this.title}#${this.revisionId} finished.`);
+        return;
     }
 
     /**
@@ -52,6 +53,7 @@ class Page {
         // 从API获得EditToken
         // Get EditToken from MediaWiki API
         this.editToken = await Wiki.getEditToken();
+        return;
     }
 
     /**
@@ -68,6 +70,7 @@ class Page {
             this.revisionId = revisionId;
             this.isNewPage = false;
         }
+        return;
     }
 
     /**

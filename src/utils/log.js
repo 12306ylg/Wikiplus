@@ -4,6 +4,7 @@ class WikiplusError extends Error {
     constructor(message, code) {
         super(message);
         this.code = code;
+        this.name = "WikiplusError";
     }
 }
 
@@ -15,15 +16,18 @@ class Log {
         console.info(`[Wikiplus-INFO] ${message}`);
     }
     static error(errorCode, payloads = []) {
-        let template = i18n.translate(errorCode);
+        const template = i18n.translate(errorCode);
+        let message = template;
+        
         if (payloads.length > 0) {
-            // Fill
-            payloads.forEach((v, i) => {
-                template = template.replace(new RegExp(`\\${i + 1}`, "ig"), v);
+            message = message.replace(/\$\{(\d+)\}/g, (_, index) => {
+                const idx = parseInt(index, 10) - 1;
+                return (idx >= 0 && idx < payloads.length) ? payloads[idx] : `$\{${index}\}`;
             });
         }
-        console.error(`[Wikiplus-ERROR] ${template}`);
-        throw new WikiplusError(`${template}`, errorCode);
+        console.error(`[Wikiplus-ERROR] ${message}`);
+        
+        throw new WikiplusError(message, errorCode);
     }
 }
 

@@ -82,30 +82,7 @@ class UI {
     addFunctionButton(text, id) {
         let button;
         switch (Constants.skin) {
-            case "minerva": {
-                button = $("<li>")
-                    .attr("id", id)
-                    .addClass("toggle-list-item")
-                    .append(
-                        $("<a>")
-                            .addClass("mw-ui-icon mw-ui-icon-before toggle-list-item__anchor")
-                            .append(
-                                $("<span>")
-                                    .attr("href", "javascript:void(0);")
-                                    .addClass("toggle-list-item__label")
-                                    .text(text)
-                            )
-                    );
-                break;
-            }
-            case "moeskin": {
-                button = $("<li>")
-                    .addClass("Wikiplus-More-Function-Button")
-                    .attr("id", id)
-                    .append($("<a>").attr("href", "javascript:void(0);").text(text));
-                break;
-            }
-            default: {
+            case "vector": {
                 button = $("<li>")
                     .addClass("mw-list-item")
                     .addClass("vector-tab-noicon")
@@ -113,13 +90,8 @@ class UI {
                     .append($("<a>").attr("href", "javascript:void(0);").text(text));
             }
         }
-        if (Constants.skin === "minerva" && $("#p-tb").length > 0) {
-            $("#p-tb").append(button);
-            return $(`#${id}`);
-        } else if (Constants.skin === "moeskin") {
-            $(".more-actions-list").first().append(button);
-            return $(`#${id}`);
-        } else if ($("#p-cactions").length > 0) {
+
+        if ($("#p-cactions").length > 0) {
             $("#p-cactions ul").append(button);
             return $(`#${id}`);
         } else {
@@ -317,13 +289,21 @@ class UI {
         const previewBox = $("<div>").attr("id", "Wikiplus-Quickedit-Preview-Output"); // 预览输出
         const summaryBox = $("<input>")
             .attr("id", "Wikiplus-Quickedit-Summary-Input")
+            .addClass("cdx-text-input__input")
+            .attr("type", "text")
             .attr("placeholder", `${i18n.translate("summary_placehold")}`); // 编辑摘要输入
-        const editSubmitBtn = $("<button>")
+        const editSubmitBtn = $("<input>")
             .attr("id", "Wikiplus-Quickedit-Submit")
-            .text(`${i18n.translate(isNewPage ? "publish_page" : "publish_change")}(Ctrl+S)`); // 提交按钮
-        const previewSubmitBtn = $("<button>")
+            .attr("role", "button")
+            .addClass("mw-ui-button mw-ui-progressive")
+            .attr("type", "submit")
+            .val(`${i18n.translate(isNewPage ? "publish_page" : "publish_change")}(Ctrl+S)`); // 提交按钮
+        const previewSubmitBtn = $("<input>")
             .attr("id", "Wikiplus-Quickedit-Preview-Submit")
-            .text(`${i18n.translate("preview")}`); // 预览按钮
+            .addClass("mw-ui-button mw-ui-progressive")
+            .attr("role", "button")
+            .attr("type", "button")
+            .val(`${i18n.translate("preview")}`); // 预览按钮
         const isMinorEdit = $("<div>")
             .append($("<input>").attr({ type: "checkbox", id: "Wikiplus-Quickedit-MinorEdit" }))
             .append(
@@ -336,12 +316,17 @@ class UI {
         const editBody = $("<div>").append(
             backBtn,
             jumpBtn,
+            $("<div>").append(
             previewBox,
+            )
+            .attr("style", "overflow: auto; max-height: 400px;background: #f9f9f9;"),
             inputBox,
             summaryBox,
             $("<br>"),
             isMinorEdit,
+            $("<hr>"),
             editSubmitBtn,
+            $("<br>"),
             previewSubmitBtn
         );
         this.createDialogBox(title, editBody, 1000, () => {
@@ -370,6 +355,7 @@ class UI {
                 $("#Wikiplus-Quickedit-Preview-Output").fadeIn("100");
                 $("#Wikiplus-Quickedit-Preview-Submit").prop("disabled", false);
             });
+            return;
         });
         // Edit
         $("#Wikiplus-Quickedit-Submit").on("click", async function () {
@@ -408,6 +394,7 @@ class UI {
                 console.log(e);
                 $(".Wikiplus-Banner").css("background", "rgba(218, 142, 167, 0.65)");
                 $(".Wikiplus-Banner").html(e.message);
+                return;
             } finally {
                 $(
                     "#Wikiplus-Quickedit-Submit,#Wikiplus-Quickedit,#Wikiplus-Quickedit-Preview-Submit"
@@ -523,6 +510,7 @@ class UI {
                             $(".Wikiplus-Banner").css("background", "rgba(218, 142, 167, 0.65)");
                             $(".Wikiplus-Banner").text(e.message);
                         }
+                        return;
                     });
                 }
             }
