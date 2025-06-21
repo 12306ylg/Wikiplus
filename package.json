@@ -1,6 +1,6 @@
 {
     "name": "wikiplus-core",
-    "version": "4.1.0-ottowikiEdition",
+    "version": "4.1.0-OTTOWikiEdition",
     "homepage": "https://wikiplus-app.smartgslb.com/",
     "description": "A front-end jQuery-based Mediawiki plugin.",
     "main": "dist/Main.js",
@@ -27,7 +27,7 @@
             "url": "https://zyzsdy.com"
         }
     ],
-    "license": "Apache-2.0",
+    "license": "CC BY-SA 4.0",
     "devDependencies": {
         "@babel/core": "^7.27.1",
         "@babel/eslint-parser": "^7.27.1",
