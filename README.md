@@ -3,6 +3,8 @@ Wikiplus(OTTOWikiEditon)
 
 A Mediawiki front-end add-on based on jQuery.
 
+*Fuck WikiPlus,Love InPageEdit*
+`So Archived`
 More Information of Original Version
 ----------------
 
